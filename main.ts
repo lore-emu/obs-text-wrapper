@@ -41,9 +41,7 @@ export default class TextWrap extends Plugin {
 			name: 'Quick Tag One',
 
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				const selection = editor.getSelection();
-				const tag = this.settings.quickTagOne;
-				editor.replaceSelection(`<${tag}>${selection}</${tag}>`)
+        this.addTagAroundSelection(editor, this.settings.quickTagOne)
 			},
 		});
 
@@ -53,9 +51,7 @@ export default class TextWrap extends Plugin {
 			name: 'Quick Tag Two',
 
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				const selection = editor.getSelection();
-				const tag = this.settings.quickTagTwo;
-				editor.replaceSelection(`<${tag}>${selection}</${tag}>`)
+        this.addTagAroundSelection(editor, this.settings.quickTagTwo)
 			},
 		});
 
@@ -65,9 +61,7 @@ export default class TextWrap extends Plugin {
 			name: 'Quick Tag Three',
 
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				const selection = editor.getSelection();
-				const tag = this.settings.quickTagThree;
-				editor.replaceSelection(`<${tag}>${selection}</${tag}>`)
+        this.addTagAroundSelection(editor, this.settings.quickTagThree)
 			},
 		});
 
@@ -85,6 +79,12 @@ export default class TextWrap extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
+
+  addTagAroundSelection(editor: Editor, tagWithAttributes: string) {
+    const selection = editor.getSelection();
+    const tag = tagWithAttributes.split(" ", 2)[0]
+    editor.replaceSelection(`<${tagWithAttributes}>${selection}</${tag}>`)
+  }
 }
 
 class TextWrapModal extends Modal {
